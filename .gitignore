@@ -1,0 +1,13 @@
+# Cursor / editor — local y generado (no compartir)
+.cursor/settings.json
+.cursor/**/*.log
+.cursor/skills/**/*.md
+!.cursor/skills/**/SKILL.md
+
+# Contexto de sesión del agente (comprimido, no instrucciones de equipo)
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+*.local.md
