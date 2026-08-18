@@ -105,14 +105,14 @@ Detalle completo: [`AGENTS.md`](AGENTS.md).
 
 | Carpeta | Contenido |
 |---------|-----------|
-| `context/` | `design.md`: tres capas Color, sets, convención `{path}`. `decisiones.md`: índice + preguntas abiertas de Fase 0. |
-| `decisions/` | ADRs. Color (propuesta, no ejecutada). Memoria persistente (aceptada). |
-| `state/` | Dónde vamos. Binding Color **no ejecutado**. Blocker: Neutral 82/85/88, Background 3/4, ghost alpha. |
+| `context/` | `design.md`: tres capas Color (hex solo `_Base`). `decisiones.md`: índice + criterios vigentes. |
+| `decisions/` | ADRs. Color **aceptada y aplicada**. Memoria persistente (aceptada). |
+| `state/` | Dónde vamos. Binding Color **ejecutado**. Smoke Tokens Studio pendiente. |
 | `skills/` | Procedimiento (`color-token-binding.md`) + mapa de 153 aliases (`color-token-binding-plan.md`). |
 | `gotchas/` | JSON enorme, paths con emoji, `$` en PowerShell, dos Neutral 88, Success vs Exito, `Color.elevacion` ≠ set Elevacion, alpha 8 dígitos. |
 | `logs/` | Resúmenes cortos de sesiones (**locales**, no van al git). |
 
-Fuente de tokens: `tokens.json` (~5640 líneas). Tipografia ya usa referencias `{path}`; Color todavía tiene hex crudo en aliases.
+Fuente de tokens: `tokens.json`. Tipografia y Color usan `{path}`; hex de Color solo en `_Base`.
 
 ---
 
@@ -124,7 +124,7 @@ Fuente de tokens: `tokens.json` (~5640 líneas). Tipografia ya usa referencias `
 4. Si la tarea es Color/binding, usará el skill Design System Manager y `skills/color-token-binding.md`. El plan largo (`skills/color-token-binding-plan.md`) solo se carga al editar.
 5. Al terminar un cambio real del kit, pide actualizar `state/`, `decisions/` y `logs/`.
 
-**No hace falta** adjuntar el Binding Plan, transcripts ni `tokens.json`. Si Fase 0 sigue abierta, el agente no debe reescribir Color.
+**No hace falta** adjuntar el Binding Plan, transcripts ni `tokens.json`. Fase 0 está cerrada; no re-bindear Color salvo corrección.
 
 Estado vivo: [`state/current.md`](state/current.md).
 

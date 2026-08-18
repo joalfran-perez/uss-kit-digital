@@ -1,32 +1,35 @@
 # Estado actual
 
-Actualizado: 2026-08-17.
+Actualizado: 2026-08-18.
 
 ## Hecho
 
-- Repo = Tokens Studio dump: `tokens.json` + README guía de uso.
-- Skill Cursor **design-system-manager** (puntero). Mapa Color: `skills/color-token-binding-plan.md`.
-- Análisis Color: 153 semánticos hex, 0 refs; ~149 matchean `_Base`; 4–8 unmatched.
-- Tipografia ya usa `{path}` (precedente).
-- Memoria persistente (`AGENTS.md`, `context/`, `decisions/`, `state/`, `skills/`, `gotchas/`, `logs/`).
+- Memoria persistente + skill DSM + Binding Plan en `skills/`.
+- Fase 0 Color **cerrada** (4 decisiones). Binding **ejecutado** (`skills/scripts/bind-color-tokens.js`): 0 hex fuera de `_Base`.
+- Creados en `_Base`: `Transparent`, `Facultad` (A/B/C), `Secondary` (azul 10–100). Dark Background 4 creado.
+- Tipografia / set Elevacion / Space / Radius: sin cambio de contenido.
 
-## Pendiente (orden)
+## Criterios vigentes (Color)
 
-1. **Fase 0 Color** — decidir: Neutral 82/85/88 canónico; Background 3/4; ghost alpha.
-2. Script matching hex → `{_Base...}` y reescritura de semánticos.
-3. Bindear escalas raíz (`Neutral`, `Primary`, …) a `_Base`.
-4. Validar resolve = hex original; smoke Tokens Studio.
-5. (Opcional) sync Figma Variables.
+- Hex solo en `Color._Base.*`. Alias DTCG = `{path}` entero. Prohibido `rgba({path}, n)` en tokens `color`.
+- Capa 1 (escalas raíz) y capa 2 (semánticos) → `{path}`.
+- Dos Secondary: `_Base.Secondary - Verde` (teal) ≠ `_Base.Secondary` (azul / Facultad).
+- Cadenas: `text.facultad.on-light.primary` → `{Facultad.on-light.A}` → `_Base.Facultad`; `elevacion.on-dark.*` → `{_Base.Neutral.Neutral 88}`.
+
+## Pendiente
+
+1. Smoke Tokens Studio (aliases, ghost `#00000000`, Dark BG4, elevation dark).
+2. (Opcional) unificar hex duplicado Facultad A/B/C vs Secondary azul 100/80/70/10/20/40.
+3. (Opcional) sync Figma Variables.
 
 ## Blockers
 
-- Fase 0 abierta → **no editar Color en `tokens.json`** para binding.
-- Drift Neutral: `_Base` 88/85/82 = `#1d2633` / `#202a37` / `#242f3c` vs raíz `#121c27` / `#192330` / `#212b38`. `elevacion.on-dark` usa raíz 88.
+Ninguno para Color.
 
 ## Fuera de cola
 
-Tipografia / Elevacion (sombras con hex propio) / Space / Radius — no hay plan activo.
+Tipografia; set Elevacion (sombras `#283341…`); Space; Radius.
 
 ## Siguiente sesión
 
-Si el usuario cierra Fase 0 → ejecutar `skills/color-token-binding.md`. Si no → no tocar `tokens.json`.
+Validar en Tokens Studio. No re-bindear Color salvo corrección.

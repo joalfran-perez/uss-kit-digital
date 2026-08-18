@@ -6,7 +6,7 @@ Tokens Studio → `tokens.json`. Un solo archivo, cinco sets. No hay temas (`$th
 
 | Set | Rol | Hex / refs |
 |-----|-----|------------|
-| **Color** | Primitivos `_Base` + escalas raíz + aliases light/dark + `bg`/`text`/`USS`/`elevacion` | Hoy: hex en todo. Meta: hex solo en `_Base`; resto `{path}` |
+| **Color** | Primitivos `_Base` + escalas raíz + aliases light/dark + `bg`/`text`/`USS`/`elevacion` | Hex solo `_Base`. Resto `{path}` (aplicado 2026-08-18) |
 | **Tipografia** | Primitivos (`fontFamilies`, `fontSize`, …) + compuestos Desktop/títulos | Ya usa `{fontFamilies.montserrat}` etc. **Patrón a copiar** |
 | **Elevacion** | `boxShadow` con color hex embebido (`#283341…`) | Independiente de `Color.elevacion` (ese es fill, no sombra) |
 | **Space** | `Espaciado.spacing-NN` numbers + scopes Figma | Primitivos |
@@ -15,20 +15,20 @@ Tokens Studio → `tokens.json`. Un solo archivo, cinco sets. No hay temas (`$th
 ## Color — tres capas
 
 ```
-Capa 0  Color._Base.*          ← única fuente de hex (Neutral, Primary, Secondary-Verde, Info, Success, Warning, Error)
-Capa 1  Color.{Neutral,Primary,Secondary,Info,Exito,Alerta,Error,Facultad,Tono-*}  ← escalas publicadas; deben aliasar _Base
-Capa 2  Light mode | ☾ Dark mode | bg | text | USS | elevacion  ← semánticos; solo {path}
+Capa 0  Color._Base.*          ← única fuente de hex (Neutral, Primary, Secondary-Verde, Secondary azul, Facultad, Transparent, Info, Success, Warning, Error)
+Capa 1  Color.{Neutral,Primary,Secondary,Info,Exito,Alerta,Error,Facultad,Tono-*}  ← aliasan _Base
+Capa 2  Light mode | ☾ Dark mode | bg | text | USS | elevacion  ← `{path}` (facultad texto → Facultad.*)
 ```
 
-Naming paralelo (paths distintos, mismos hex): `_Base.Success` ↔ `Exito`; `_Base.Warning` ↔ `Alerta`.
+Naming paralelo: `_Base.Success` ↔ `Exito`; `_Base.Warning` ↔ `Alerta`. `_Base.Secondary - Verde` (teal) ≠ `_Base.Secondary` (azul).
 
-## Conteos Color (ago 2026)
+## Conteos Color (ago 2026, post-binding)
 
-Semánticos: 153 tokens, 153 hex, 0 refs. `_Base`: 75. Escalas raíz: 97. Unique hex semánticos: 51. Unmatched: 4.
+Semánticos y escalas raíz: `{path}`. Hex solo `_Base` (incl. Transparent, Facultad, Secondary azul). Unique unmatched de Fase 0: resueltos por decisión, no por match de hex.
 
 ## Convención de referencia
 
-Tokens Studio: `{_Base.Primary.Primary 90}` (set Color, path con puntos). No DTCG `$value`. Tipografia es el precedente.
+`{_Base.Primary.Primary 90}` (set Color). Alias = `{path}` entero (DTCG). No `rgba({path}, 0)`. Tokens Studio usa `value` / `type`, no `$value` / `$type`.
 
 ## Fuera de alcance de este archivo
 

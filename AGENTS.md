@@ -26,7 +26,7 @@ Rol por defecto para Color/tokens: **Design System Manager** (`.cursor/skills/de
 4. Trabajo de Color no toca Tipografia / Elevacion / Space / Radius salvo pedido explícito.
 5. No editar `$themes` / `$metadata.tokenSetOrder` sin decisión registrada.
 6. No commitear ni pushear a menos que el usuario lo pida.
-7. Binding Color bloqueado hasta resolver Fase 0 (`state/current.md`).
+7. Binding Color: Fase 0 cerrada. Hex solo en `_Base` (+ Transparent, Facultad, Secondary azul).
 
 ## No cargar por defecto
 

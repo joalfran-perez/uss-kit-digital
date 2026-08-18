@@ -2,7 +2,7 @@
 
 Usar cuando se reescriban aliases Color de hex a `{_Base...}`. Skill Cursor: `.cursor/skills/design-system-manager/`.
 
-**No ejecutar** si `state/current.md` tiene Fase 0 abierta.
+**No ejecutar** de nuevo salvo corrección. Fase 0 cerrada; binding aplicado 2026-08-18.
 
 ## Cargar
 
@@ -26,4 +26,4 @@ Usar cuando se reescriban aliases Color de hex a `{_Base...}`. Skill Cursor: `.c
 "Surface strong - default": { "value": "{_Base.Primary.Primary 90}", "type": "color" }
 ```
 
-Ghost: `rgba({_Base.Neutral.Neutral 10 (blanco)}, 0)` solo si Tokens Studio lo resuelve; si no, ver gotcha alpha.
+Ghost: `{_Base.Transparent}` (`#00000000`). No `rgba({ref}, 0)` — alias DTCG es `{path}` entero, no embeber en funciones.

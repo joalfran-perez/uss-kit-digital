@@ -24,9 +24,9 @@ Misma escala, nombres distintos. Binding apunta a `_Base.*`, no a la escala raí
 
 `Color.elevacion` = fills. Set `Elevacion` = `boxShadow` con `#283341` + alpha. No mezclar en un binding de Color.
 
-## Alpha 8 dígitos
+## Alpha 8 dígitos / ghost
 
-`#ffffff00` / `#0b141f00` no matchean `_Base`. Tokens Studio puede no resolver `rgba({ref}, 0)`. Probar en Studio antes de masificar.
+No usar `rgba({ref}, 0)`: no es `$type: color` DTCG válido. Primitivo `_Base.Transparent` `#00000000`; aliases `{_Base.Transparent}`.
 
 ## Descriptions mienten a veces
 
