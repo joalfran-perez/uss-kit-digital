@@ -1,35 +1,36 @@
 # Estado actual
 
-Actualizado: 2026-08-18.
+Actualizado: 2026-10-02.
+
+## Fuente de verdad
+
+- **`main`**: Figma (USS One — Fundamentos) manda. `tokens.json` = puente Tokens Studio **intacto** (solo lectura para el agente). Sync: Figma → Studio → push.
+- **`readme-guide`**: code-first / binding estacionado. **No** empujar a `main` hasta acuerdo explícito de cambiar SoT.
 
 ## Hecho
 
-- Memoria persistente + skill DSM + Binding Plan en `skills/`.
-- Fase 0 Color **cerrada** (4 decisiones). Binding **ejecutado** (`skills/scripts/bind-color-tokens.js`): 0 hex fuera de `_Base`.
-- Creados en `_Base`: `Transparent`, `Facultad` (A/B/C), `Secondary` (azul 10–100). Dark Background 4 creado.
-- Tipografia / set Elevacion / Space / Radius: sin cambio de contenido.
+- Re-extract en `main` @ `777b798` + pull local.
+- ADR SoT endurecido: [`decisions/2026-10-01-native-reextract-source-of-truth.md`](../decisions/2026-10-01-native-reextract-source-of-truth.md).
+- Inventario residuales: [`skills/native-reextract-inventory.md`](../skills/native-reextract-inventory.md).
+- Memoria: no mutar `tokens.json` en `main`; legacy marcado.
 
-## Criterios vigentes (Color)
+## Criterios vigentes
 
-- Hex solo en `Color._Base.*`. Alias DTCG = `{path}` entero. Prohibido `rgba({path}, n)` en tokens `color`.
-- Capa 1 (escalas raíz) y capa 2 (semánticos) → `{path}`.
-- Dos Secondary: `_Base.Secondary - Verde` (teal) ≠ `_Base.Secondary` (azul / Facultad).
-- Cadenas: `text.facultad.on-light.primary` → `{Facultad.on-light.A}` → `_Base.Facultad`; `elevacion.on-dark.*` → `{_Base.Neutral.Neutral 88}`.
+1. No editar `tokens.json` en `main` (binding, patches, “fixes”).
+2. Hex residuales → corregir en Figma/Studio, no en git a mano.
+3. Docs/AGENTS/skills sí se mantienen en el repo.
+4. `readme-guide` → `main` solo con decisión formal de SoT code-first.
 
 ## Pendiente
 
-1. Smoke Tokens Studio (aliases, ghost `#00000000`, Dark BG4, elevation dark).
-2. (Opcional) unificar hex duplicado Facultad A/B/C vs Secondary azul 100/80/70/10/20/40.
-3. (Opcional) sync Figma Variables.
+1. Smoke Tokens Studio (resolve, rem, enabled sets) — sin editar JSON.
+2. (Opcional) cambios de residuales **en Figma**, luego re-export a `main`.
+3. (Opcional) script solo-lectura `inventory-native-color.js`.
 
 ## Blockers
 
-Ninguno para Color.
-
-## Fuera de cola
-
-Tipografia; set Elevacion (sombras `#283341…`); Space; Radius.
+Ninguno. Política: Figma SoT activa.
 
 ## Siguiente sesión
 
-Validar en Tokens Studio. No re-bindear Color salvo corrección.
+`Lee AGENTS.md y state/current.md. Continúa el pendiente.`

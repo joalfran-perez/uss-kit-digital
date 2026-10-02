@@ -1,34 +1,30 @@
 ---
 name: design-system-manager
 description: >-
-  Manages USS Kit Digital design tokens, alias-to-primitive bindings, token
-  hierarchy, and Tokens Studio conventions. Use when the user asks about color
-  tokens, primitive binding, aliases with raw hex, tokens.json structure,
-  semantic vs _Base tokens, or when acting as Design System Manager.
+  Manages USS Kit Digital governance on main (Figma SoT, tokens.json read-only)
+  and legacy readme-guide. Use for inventory, docs, Tokens Studio sync guidance,
+  or Design System Manager role — not for rewriting main tokens.json.
 disable-model-invocation: true
 ---
 
 # Design System Manager
 
-Mantenedor de tokens USS: jerarquía Color, binding alias→`_Base`, Tokens Studio / Figma.
+**Por defecto = `main`, SoT Figma.** `tokens.json` es puente USS One — Fundamentos: **no modificar**.
 
-**Cargar:** `AGENTS.md` + `state/current.md`. Arquitectura: `context/design.md`. Procedimiento: `skills/color-token-binding.md`.
-
-**Mapa (solo al editar Color):** `skills/color-token-binding-plan.md`
+**Cargar:** `AGENTS.md` + `state/current.md` → `context/design.md`. ADR: `decisions/2026-10-01-native-reextract-source-of-truth.md`. Inventario: `skills/native-reextract-inventory.md`.
 
 ## When
 
-Color, `_Base`, aliases hex, drift Neutral 82/85/88, refs `{path}`, cambios en `tokens.json` Color.
+Inventario Color nativo, docs, SoT, sync Tokens Studio, o pedido explícito de **legacy** `readme-guide`.
 
-## Rules
+## Rules (main)
 
-1. Hex solo en `Color._Base.*`. Semánticos: `{path}`, nunca `#hex`.
-2. Paths exactos (`Neutral 10 (blanco)`, `☾ Dark mode`).
-3. Color no toca Tipografia / Elevacion / Space / Radius salvo pedido.
-4. Fase 0 abierta → no editar Color. Ver `state/current.md`.
+1. **No Write** sobre `tokens.json`. Cambios de variables → Figma → Tokens Studio → push.
+2. Paths: `Color/Light mode`, `_Base palettes` (espacio), `{_Base palettes...}`.
+3. No `bind-color-tokens.js` / Binding Plan 153.
+4. `readme-guide` → `main` solo con acuerdo explícito de SoT code-first.
+5. Residuales hex: documentar; corregir en Figma si aplica.
 
 ## Workflow
 
-Inventario hex vs `{` → match `_Base` → unmatched/alpha/drift → `{_Base...}` → resolve = hex original, sin ciclos.
-
-Detalle: `skills/color-token-binding.md`. Tabla 153 aliases: `skills/color-token-binding-plan.md`.
+Leer state → inventariar/docs → si hace falta cambio de diseño, indicarlo para Figma — no parchear el JSON.

@@ -1,6 +1,6 @@
 # 2026-08-04 — Jerarquía Color y binding alias→primitivo
 
-Status: **aceptada y aplicada** (Fase 0 2026-08-17/18; binding `tokens.json` 2026-08-18).
+Status: **legacy** — aceptada y aplicada en taxonomía antigua (`readme-guide`, ago 2026). **No** es el mapa de `main` nativo (ver ADR 2026-10-01).
 
 ## Qué
 

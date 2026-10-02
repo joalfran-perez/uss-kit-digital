@@ -1,37 +1,37 @@
 # Gotchas — tokens.json / Tokens Studio
 
+## SoT Figma en `main`
+
+`tokens.json` en `main` es el puente con **USS One — Fundamentos**. **No editarlo** fuera de Tokens Studio. Residual hex ≠ licencia para parchear en git.
+
+## `main` vs `readme-guide`
+
+`readme-guide` = code-first estacionado. Merge a `main` solo con decisión explícita de cambiar SoT.
+
 ## `tokens.json` no se lee entero
 
-5640 líneas. Usar Grep (`"Light mode"`, `"_Base"`, `"value": "#`) o Read con offset. Nunca `require()` de todo el archivo en el prompt.
+Grep por set (`Color/Light mode`, `_Base palettes`) o Read con offset. Nunca archivo entero al prompt. En `main`: Read sí, Write no.
 
-## Paths con espacios / emoji / paréntesis
+## Paths nativos
 
-Refs deben ser literales: `{_Base.Neutral.Neutral 10 (blanco)}`, set `☾ Dark mode`. Un carácter de menos = token roto en Tokens Studio.
+Sets con `/`. Primitivos `_Base palettes` (espacio). Legacy `{_Base.Neutral...}` no aplica a `main`.
 
-## PowerShell + `node -e` + `$`
+## PowerShell + `$`
 
-`$json`, `$themes`, `$metadata` se comen en PowerShell. Preferir script `.js` o `node -e` sin `$` en el string, o `JSON.parse(fs.readFileSync(...))`.
+`$themes` / `$metadata` se rompen en PowerShell. Preferir script `.js` o `fs.readFileSync`.
 
-## Dos “Neutral 88”
+## Hex residuales
 
-`_Base.Neutral.Neutral 88` ≠ `Color.Neutral.88` ≠ `elevacion.on-dark` (`#121c27`, description “Neutral 88”). Bindear por description sin chequear hex cambia elevation dark.
+Ver `skills/native-reextract-inventory.md`. Acción: Figma/Studio, no StrReplace en el puente.
 
-## `_Base.Success` vs `Exito` (y Warning/Alerta)
+## Alpha / ghost
 
-Misma escala, nombres distintos. Binding apunta a `_Base.*`, no a la escala raíz, salvo decisión contraria.
+No `rgba({ref}, 0)` (DTCG). Nativo puede traer `#ffffff00` hasta que Figma cambie.
 
-## Color.elevacion ≠ set Elevacion
+## Binding legacy
 
-`Color.elevacion` = fills. Set `Elevacion` = `boxShadow` con `#283341` + alpha. No mezclar en un binding de Color.
+Plan/script = solo `readme-guide`. Ver `skills/scripts/README.md`.
 
-## Alpha 8 dígitos / ghost
+## Space/Radius rem
 
-No usar `rgba({ref}, 0)`: no es `$type: color` DTCG válido. Primitivo `_Base.Transparent` `#00000000`; aliases `{_Base.Transparent}`.
-
-## Descriptions mienten a veces
-
-`bg`/`USS`/`elevacion` describen el step; `elevacion` dice Neutral 88 pero el hex es el de la escala raíz, no `_Base`. Validar hex, no el texto.
-
-## Binding Plan es grande
-
-`skills/color-token-binding-plan.md` (~330 líneas). No cargarlo para arquitectura; basta `context/design.md`.
+Export nativo `dimension` en `rem`.

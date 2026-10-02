@@ -1,6 +1,8 @@
-# Color Token Binding Plan
+# Color Token Binding Plan (LEGACY)
 
-Plan para conectar aliases semánticos de Color a tokens primitivos en `tokens.json`, eliminando valores hex absolutos. Origen: análisis del set Color (agosto 2026).
+**LEGACY — taxonomía pre-re-extract / rama `readme-guide`.** No usar como mapa de `main` nativo. Ver `skills/native-reextract-inventory.md` y ADR `2026-10-01-native-reextract-source-of-truth.md`.
+
+Plan histórico (ago 2026) para conectar aliases Color a `_Base` en el JSON antiguo.
 
 ## Objetivo
 

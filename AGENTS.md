@@ -1,12 +1,10 @@
 # USS Kit Digital — AGENTS.md
 
-Design tokens de Universidad San Sebastián para Ellucian Experience. Fuente: `tokens.json` (Tokens Studio). Sets: Color, Tipografia, Elevacion, Space, Radius.
+Design tokens USS (Ellucian Experience). **`main`**: puente Figma (USS One — Fundamentos) vía Tokens Studio — `tokens.json` **intacto**. **`readme-guide`**: archivo code-first estacionado hasta acuerdo explícito de volver a `main`.
 
 ## Identidad
 
-Agente = mantenedor del kit, no generador de UI. Prioridad: jerarquía de tokens, binding alias→primitivo, cero hex en semánticos, sync Figma/Tokens Studio.
-
-Rol por defecto para Color/tokens: **Design System Manager** (`.cursor/skills/design-system-manager/`).
+Agente = mantenedor de memoria/gobernanza del kit, no editor del export Figma. Prioridad: no mutar `tokens.json` en `main`; documentar; inventariar. Rol: **Design System Manager** (`.cursor/skills/design-system-manager/`).
 
 ## Reglas de oro (contexto)
 
@@ -20,81 +18,74 @@ Rol por defecto para Color/tokens: **Design System Manager** (`.cursor/skills/de
 
 ## Invariantes
 
-1. Hex absoluto solo en primitivos: `Color._Base.*`.
-2. Aliases semánticos (`Light mode`, `☾ Dark mode`, `bg`, `text`, `USS`, `elevacion`) usan `{path}`, nunca `#hex`.
-3. Paths de Tokens Studio son exactos: espacios, paréntesis, emoji (`Neutral 10 (blanco)`, `☾ Dark mode`).
-4. Trabajo de Color no toca Tipografia / Elevacion / Space / Radius salvo pedido explícito.
-5. No editar `$themes` / `$metadata.tokenSetOrder` sin decisión registrada.
-6. No commitear ni pushear a menos que el usuario lo pida.
-7. Binding Color: Fase 0 cerrada. Hex solo en `_Base` (+ Transparent, Facultad, Secondary azul).
+1. **Figma manda en `main`.** `tokens.json` es el puente directo con USS One — Fundamentos. **No editar** `tokens.json` en `main` (ni binding, ni patches de hex). Cambios de tokens → Figma / Tokens Studio push.
+2. **`readme-guide` no se mezcla con `main`** hasta decisión explícita de SoT code-first + push acordado.
+3. Alias DTCG = `{path}` entero si se documenta o se trabaja legacy. Prohibido `rgba({ref}, n)`.
+4. Paths nativos exactos: `_Base palettes` (espacio), sets con `/` (`Color/Light mode`).
+5. Scope: un set o familia por tarea.
+6. No editar `$themes` / `$metadata.tokenSetOrder` sin ADR (y sin mutar tokens salvo sync Figma).
+7. No commitear ni pushear a menos que el usuario lo pida.
+8. No ejecutar `bind-color-tokens.js` ni Binding Plan 153 sobre `main`.
 
 ## No cargar por defecto
 
 | Recurso | Por qué | Cuándo sí |
 |---------|---------|-----------|
-| `tokens.json` (5640 líneas) | Denso, se come el contexto | Grep/Read por path; nunca el archivo entero |
-| `skills/color-token-binding-plan.md` | Tabla de 153 bindings | Solo al ejecutar binding Color |
-| `agent-transcripts/` | Historial crudo | Nunca; usar `logs/` |
-| Figma MCP / skills de Figma | Irrelevante a tokens JSON | Solo si el usuario pide Figma |
+| `tokens.json` | Denso; solo lectura en `main` | Grep/Read por set; nunca entero; **nunca Write** en `main` |
+| `skills/color-token-binding-plan.md` | Legacy | Solo pedido explícito `readme-guide` |
+| `agent-transcripts/` | Crudo | Nunca; usar `logs/` |
+| Figma MCP | Solo sync Figma | Si el usuario pide Figma |
 
 ## Orden de lectura
 
-Mínimo (toda sesión): este archivo + `state/current.md`.
-
-Según tarea, **uno** de:
+Mínimo: este archivo + `state/current.md`.
 
 | Tarea | Leer |
 |-------|------|
-| Color / aliases / binding | `context/design.md` → skill DSM → `skills/color-token-binding.md`. Plan completo solo al editar |
-| Decisión de diseño | `context/decisiones.md` → ADR en `decisions/` |
-| Bug / valor raro / Tokens Studio | `gotchas/tokens-studio.md` |
-| Continuar trabajo | `state/current.md` → último archivo en `logs/` |
-| Tipografia / Space / Radius / Elevacion | `context/design.md` (mapa de sets) + grep en `tokens.json` |
+| Arquitectura / SoT | `context/design.md` + ADR 2026-10-01 |
+| Inventario nativo | `skills/native-reextract-inventory.md` |
+| Decisión | `context/decisiones.md` → `decisions/` |
+| Gotcha Studio | `gotchas/tokens-studio.md` |
+| Legacy binding | `skills/color-token-binding.md` solo si piden `readme-guide` |
 
 ## Routing de skills
 
-| Trigger | Skill / procedimiento |
-|---------|----------------------|
-| Color, `_Base`, aliases hex, binding, Design System Manager | `.cursor/skills/design-system-manager/` + `skills/color-token-binding.md` |
-| Crear/editar skills Cursor | skill `create-skill` (no duplicar aquí) |
-| Figma write / variables / Code Connect | skills Figma (`figma-use`, `figma-generate-library`, …) **después** de cargar el skill Figma correspondiente |
-| Git commit / PR | reglas de usuario; no usar memoria de tokens |
-
-Si no hay skill: procedimiento corto en `skills/` o, si se repetirá, crear skill y apuntarlo aquí.
+| Trigger | Skill |
+|---------|-------|
+| Color nativo, inventario, SoT | DSM + `context/design.md` + inventario (**sin editar tokens**) |
+| Binding legacy / `readme-guide` | Pedido explícito → `skills/color-token-binding.md` |
+| Cambiar variables de diseño | Figma / Tokens Studio — no el JSON a mano |
+| Git commit / PR | Reglas de usuario |
 
 ## Punteros de memoria
 
 | Path | Qué hay |
 |------|---------|
-| `context/design.md` | Arquitectura del kit (sets, capas Color, convenciones) |
-| `context/decisiones.md` | Índice de decisiones de diseño |
-| `decisions/` | ADRs fechados (qué / por qué / status) |
-| `state/current.md` | Hecho / pendiente / blockers — única fuente de “dónde vamos” |
-| `skills/` | Procedimientos del repo (no confundir con `.cursor/skills/`) |
-| `gotchas/` | Fallos conocidos + fix |
-| `logs/` | Resúmenes de sesión **locales** (gitignored). No transcripts. |
+| `context/design.md` | Taxonomía nativa + SoT Figma |
+| `context/decisiones.md` | Índice ADRs |
+| `decisions/` | Incluye ADR re-extract / SoT |
+| `state/current.md` | Hecho / pendiente / blockers |
+| `skills/` | Inventario nativo + legacy marcado |
+| `gotchas/` | Fallos + regla read-only |
+| `logs/` | Locales (gitignored) |
 
 ## Comportamiento
 
-1. Abrir sesión: leer `AGENTS.md` + `state/current.md`. No releer transcripts.
-2. Scope: una categoría de tokens por tarea. Preguntar si el pedido cruza Color + otro set.
-3. Editar `tokens.json` con matching exacto; no reescribir el archivo entero.
-4. Tras cambio de Color: no afirmar “binding hecho” si Fase 0 sigue abierta.
-5. Cierre de sesión importante:
-   - `state/current.md` (hecho / pendiente / blockers)
-   - ADR nuevo en `decisions/` si cambió una regla
-   - `logs/YYYY-MM-DD-<tema>.md` (local, ≤40 líneas). Hechos que el equipo debe recordar → `decisions/` o `state/`
-6. Si un procedimiento se usa ≥2 veces → `skills/` (+ Cursor skill si debe auto-invocarse).
+1. Abrir: `AGENTS.md` + `state/current.md`.
+2. En `main`: **leer** `tokens.json`; no Write/StrReplace sobre él.
+3. Hex residuales / gaps → documentar o pedir cambio en Figma; no parchear el puente.
+4. Cierre de sesión: `state/` + ADR si cambió regla + `logs/` local.
+5. Merge `readme-guide` → `main` solo si el usuario declara el cambio de SoT.
 
 ## Definition of Done
 
-- [ ] Cambio acotado al set pedido
-- [ ] Semánticos Color sin hex nuevo (salvo whitelist en `state/current.md`)
-- [ ] Refs `{...}` con path exacto; resolve = hex previo si era binding
-- [ ] Sin ciclos de alias
-- [ ] `state/` actualizado; decisión nueva en `decisions/` si aplica
-- [ ] No se tocó Tipografia/Elevacion/Space/Radius en un diff de Color
+- [ ] No se modificó `tokens.json` en `main` (salvo que el usuario traiga un push de Tokens Studio y pida commit de ese sync)
+- [ ] Docs/state actualizados si cambió gobernanza
+- [ ] Sin script/plan legacy aplicado a `main`
+- [ ] Paths documentados con taxonomía nativa
 
 ## Arranque de sesión (usuario)
 
-Pegar: `Lee AGENTS.md y state/current.md. Continúa el pendiente.` + la tarea concreta.
+```text
+Lee AGENTS.md y state/current.md. Continúa el pendiente.
+```

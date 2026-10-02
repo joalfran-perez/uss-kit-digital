@@ -1,35 +1,44 @@
 # Design — USS Kit Digital
 
-Tokens Studio → `tokens.json`. Un solo archivo, cinco sets. No hay temas (`$themes: []`).
+**SoT en `main` = Figma (USS One — Fundamentos de diseño).**  
+`tokens.json` = puente Tokens Studio (export nativo, sin presets). **No editar** el JSON en el repo para “arreglar” tokens; cambiar en Figma y re-exportar.
+
+**`readme-guide`** = definición code-first / binding **estacionada**. Solo se empuja a `main` si el equipo acuerda cambiar la fuente de verdad.
+
+`$themes: []`. Modos = token sets separados.
 
 ## Sets (`$metadata.tokenSetOrder`)
 
-| Set | Rol | Hex / refs |
-|-----|-----|------------|
-| **Color** | Primitivos `_Base` + escalas raíz + aliases light/dark + `bg`/`text`/`USS`/`elevacion` | Hex solo `_Base`. Resto `{path}` (aplicado 2026-08-18) |
-| **Tipografia** | Primitivos (`fontFamilies`, `fontSize`, …) + compuestos Desktop/títulos | Ya usa `{fontFamilies.montserrat}` etc. **Patrón a copiar** |
-| **Elevacion** | `boxShadow` con color hex embebido (`#283341…`) | Independiente de `Color.elevacion` (ese es fill, no sombra) |
-| **Space** | `Espaciado.spacing-NN` numbers + scopes Figma | Primitivos |
-| **Radius** | `Radius-1`…`Radius-6` numbers | Primitivos |
+| Set | Rol |
+|-----|-----|
+| **Color/Light mode** | `Color Tokens` + `_Base palettes` + `Branding` |
+| **Color/Dark mode** | Misma forma (dark) |
+| **Device/{Mobile,Tablet,Desktop}** | Flag dispositivo |
+| **Typography/{Desktop,Mobile}** | Type + Font |
+| **Space/Mode 1** | `rem` (`dimension`) |
+| **Radius/Mode 1** | `rem` (`dimension`) |
 
-## Color — tres capas
+## Color — forma nativa
 
 ```
-Capa 0  Color._Base.*          ← única fuente de hex (Neutral, Primary, Secondary-Verde, Secondary azul, Facultad, Transparent, Info, Success, Warning, Error)
-Capa 1  Color.{Neutral,Primary,Secondary,Info,Exito,Alerta,Error,Facultad,Tono-*}  ← aliasan _Base
-Capa 2  Light mode | ☾ Dark mode | bg | text | USS | elevacion  ← `{path}` (facultad texto → Facultad.*)
+Color/{Light|Dark} mode
+  Color Tokens.*     ← semánticos
+  _Base palettes.*   ← primitivos (hex del export)
+  Branding.*
 ```
 
-Naming paralelo: `_Base.Success` ↔ `Exito`; `_Base.Warning` ↔ `Alerta`. `_Base.Secondary - Verde` (teal) ≠ `_Base.Secondary` (azul).
+Alias típico: `{_Base palettes.Neutral.Neutral 20}`.
 
-## Conteos Color (ago 2026, post-binding)
+## Criterios
 
-Semánticos y escalas raíz: `{path}`. Hex solo `_Base` (incl. Transparent, Facultad, Secondary azul). Unique unmatched de Fase 0: resueltos por decisión, no por match de hex.
+- En `main`: leer / inventariar / documentar. No Write sobre `tokens.json`.
+- Residual hex (BG 3/4, ghost, …): lista en inventario → acción en Figma si se desea cambiar.
+- Script/plan binding: solo `readme-guide` (legacy).
 
-## Convención de referencia
+## Inventario
 
-`{_Base.Primary.Primary 90}` (set Color). Alias = `{path}` entero (DTCG). No `rgba({path}, 0)`. Tokens Studio usa `value` / `type`, no `$value` / `$type`.
+[`skills/native-reextract-inventory.md`](../skills/native-reextract-inventory.md)
 
-## Fuera de alcance de este archivo
+## Legacy
 
-Mapa alias→primitivo: `skills/color-token-binding-plan.md` (cargar solo al ejecutar binding).
+Taxonomía antigua + Binding Plan 153: rama `readme-guide` / ADRs 2026-08-*.

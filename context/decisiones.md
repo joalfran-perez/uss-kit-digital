@@ -4,18 +4,17 @@ ADRs en `decisions/`. Este archivo es el índice; no duplicar el razonamiento la
 
 | Fecha | ADR | Status | Una línea |
 |-------|-----|--------|-----------|
-| 2026-08-04 | [color-hierarchy-and-binding](../decisions/2026-08-04-color-hierarchy-and-binding.md) | aceptada + aplicada | Hex solo `_Base`; `{path}` DTCG; binding 2026-08-18 |
-| 2026-08-17 | Neutral 82/85/88 | aceptada + aplicada | Gana `_Base`; raíz y `elevacion.on-dark` → Neutral 88 `#1d2633` |
-| 2026-08-18 | Background 3/4 | aceptada + aplicada | Light → Verde 10/20; Dark → Verde 100/90 (BG4 creado) |
-| 2026-08-18 | Ghost | aceptada + aplicada | `_Base.Transparent` `#00000000`. No `rgba({ref},0)` |
-| 2026-08-18 | Facultad | aceptada + aplicada | `_Base.Facultad`; texto → `{Facultad.on-light.A}` |
+| 2026-10-01 | [native-reextract-source-of-truth](../decisions/2026-10-01-native-reextract-source-of-truth.md) | aceptada + aplicada | Figma manda en `main`; `tokens.json` intacto; `readme-guide` estacionado |
+| 2026-08-04 | [color-hierarchy-and-binding](../decisions/2026-08-04-color-hierarchy-and-binding.md) | legacy (`readme-guide`) | Solo vuelve a `main` con acuerdo SoT code-first |
+| 2026-08-17 | Neutral 82/85/88 | legacy | No aplicar a nativo vía git |
+| 2026-08-18 | Background / Ghost / Facultad | legacy | Residual nativo se corrige en Figma si aplica |
 | 2026-08-17 | [persistent-memory](../decisions/2026-08-17-persistent-memory.md) | aceptada | Memoria en repo; `logs/` local |
 
-## Criterios (no reabrir sin ADR)
+## Criterios vigentes en `main`
 
-1. Alias = `{token.path}` completo. No embeber refs en `rgba()` / funciones (DTCG Format).
-2. Hex absoluto solo en `_Base` (incl. Transparent, Facultad, Secondary azul, Secondary-Verde).
-3. `_Base.Secondary - Verde` ≠ `_Base.Secondary` (azul). Facultad vive en `_Base.Facultad`, no en Verde.
-4. Semánticos apuntan a `_Base`, excepto `text.facultad.*` que pasa por `Facultad.*`.
+1. **SoT = Figma** (USS One — Fundamentos). `tokens.json` = puente; **no mutar** fuera de Tokens Studio.
+2. Alias documentados: `{_Base palettes...}`. No `rgba({ref},0)`.
+3. Inventario / docs OK; patches de tokens en repo **no**.
+4. Merge `readme-guide` → `main` solo con decisión explícita de cambiar SoT.
 
-Abiertas: ninguna de Fase 0. Pendiente operativo: smoke Tokens Studio (`state/current.md`).
+Abiertas: smoke Studio; residuales vía Figma. Ver `state/current.md`.
